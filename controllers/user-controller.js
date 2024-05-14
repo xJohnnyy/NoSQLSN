@@ -36,12 +36,14 @@ const UserController = {
       })
       .catch(err => res.status(500).json(err));
   },
+
   addFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $addToSet: { friends: req.body.friendId || req.params.friendId} },
       { new: true }
     )
+
       .then(userData => {
         if (!userData) {
           return res.status(404).json({ message: 'User not found' });
@@ -57,6 +59,7 @@ const UserController = {
       { $pull: { friends: params.friendId } },
       { new: true }
     )
+
       .then((dbUserData) => {
         if (!dbUserData) {
           return res.status(404).json({ message: "User does not exist!" });
